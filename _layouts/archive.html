@@ -1,0 +1,26 @@
+---
+layout: default
+page_type: archive
+body_class: page
+---
+
+<div id="archive">
+  <div class="article-sort-title">{{ site.data.languages[site.lang].page.articles }} - {{ site.posts.size }}</div>
+  <div class="article-sort">
+    {% assign grouped_posts = site.posts | group_by_exp: 'post', 'post.date | date: "%Y"' %}
+    {% for group in grouped_posts %}
+    <div class="article-sort-item year">{{ group.name }}</div>
+    {% for post in group.items %}
+    <div class="article-sort-item no-article-cover">
+      <div class="article-sort-item-info">
+        <div class="article-sort-item-time">
+          <i class="far fa-calendar-alt"></i>
+          <time class="post-meta-date-created" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y-%m-%d' }}</time>
+        </div>
+        <a class="article-sort-item-title" href="{{ post.url | relative_url }}" title="{{ post.title }}">{{ post.title }}</a>
+      </div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+</div>

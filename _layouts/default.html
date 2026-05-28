@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}" data-theme="light">
+{% include head.html %}
+<body>
+  <div class="{{ page.body_class | default: 'page' }}" id="body-wrap">
+    {% include site_header.html %}
+    <main class="layout" id="content-inner">
+      {{ content }}
+      {% unless page.hide_aside %}
+      {% include aside.html %}
+      {% endunless %}
+    </main>
+    {% include footer.html %}
+  </div>
+
+  {% include rightside.html %}
+  {% include scripts.html %}
+</body>
+</html>

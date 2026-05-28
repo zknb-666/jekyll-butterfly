@@ -1,0 +1,146 @@
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="author" content="{{ site.author.name | default: site.title }}">
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 }}">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="shortcut icon" href="{{ site.data.butterfly.favicon | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/index.css' | relative_url }}?v={{ site.data.butterfly.theme_version }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css">
+
+  <script>
+    (() => {
+      const saveToLocal = {
+        set: (key, value, ttl) => {
+          if (!ttl) return
+          const expiry = Date.now() + ttl * 86400000
+          localStorage.setItem(key, JSON.stringify({ value, expiry }))
+        },
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+          if (!itemStr) return undefined
+          const { value, expiry } = JSON.parse(itemStr)
+          if (Date.now() > expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return value
+        }
+      }
+
+      window.btf = {
+        saveToLocal,
+        getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+          script.src = url
+          script.async = true
+          Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+          script.onload = script.onreadystatechange = () => {
+            if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+          }
+          script.onerror = reject
+          document.head.appendChild(script)
+        }),
+        getCSS: (url, id) => new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = url
+          if (id) link.id = id
+          link.onload = link.onreadystatechange = () => {
+            if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+          }
+          link.onerror = reject
+          document.head.appendChild(link)
+        }),
+        addGlobalFn: (key, fn, name = false, parent = window) => {
+          const globalFn = parent.globalFn || {}
+          globalFn[key] = globalFn[key] || {}
+          globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+          parent.globalFn = globalFn
+        }
+      }
+
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0d0d0d')
+      }
+
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#ffffff')
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+      if (theme === 'dark') activateDarkMode()
+      if (theme === 'light') activateLightMode()
+
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    })()
+  </script>
+
+  <script>
+    const GLOBAL_CONFIG = {
+      root: '{{ "/" | relative_url }}',
+      algolia: undefined,
+      localSearch: undefined,
+      translate: undefined,
+      highlight: {
+        plugin: 'highlight.js',
+        highlightCopy: true,
+        highlightLang: true,
+        highlightHeightLimit: false,
+        highlightFullpage: false,
+        highlightMacStyle: false
+      },
+      copy: {
+        success: '{{ site.data.languages[site.lang].copy.success | escape }}',
+        error: '{{ site.data.languages[site.lang].copy.error | escape }}',
+        noSupport: '{{ site.data.languages[site.lang].copy.noSupport | escape }}'
+      },
+      relativeDate: {
+        homepage: false,
+        post: false
+      },
+      runtime: '',
+      dateSuffix: {
+        just: '{{ site.data.languages[site.lang].date_suffix.just | escape }}',
+        min: '{{ site.data.languages[site.lang].date_suffix.min | escape }}',
+        hour: '{{ site.data.languages[site.lang].date_suffix.hour | escape }}',
+        day: '{{ site.data.languages[site.lang].date_suffix.day | escape }}',
+        month: '{{ site.data.languages[site.lang].date_suffix.month | escape }}'
+      },
+      copyright: undefined,
+      lightbox: 'null',
+      Snackbar: undefined,
+      infinitegrid: {
+        js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+        buttonText: 'Load More'
+      },
+      isPhotoFigcaption: false,
+      islazyloadPlugin: false,
+      isAnchor: false,
+      percent: {
+        toc: true,
+        rightside: false
+      },
+      autoDarkmode: false
+    }
+  </script>
+
+  <script id="config-diff">
+    var GLOBAL_CONFIG_SITE = {
+      title: '{{ page.title | default: site.title | escape }}',
+      isHighlightShrink: false,
+      isToc: {% if page.page_type == 'post' %}true{% else %}false{% endif %},
+      pageType: '{{ page.page_type | default: "page" }}'
+    }
+  </script>
+</head>

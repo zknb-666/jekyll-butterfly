@@ -1,0 +1,38 @@
+---
+layout: default
+page_type: page
+body_class: page
+---
+
+{% assign kind = page.taxonomy | default: 'tags' %}
+{% if kind == 'categories' %}
+  {% assign terms = site.categories %}
+{% else %}
+  {% assign terms = site.tags %}
+{% endif %}
+
+<div id="page">
+  <article class="container" id="article-container">
+    <div class="article-sort-title">{{ page.title }} - {{ terms.size }}</div>
+    <div class="article-sort">
+      {% for term in terms %}
+      <div class="article-sort-item no-article-cover">
+        <div class="article-sort-item-info">
+          <a class="article-sort-item-title" href="#{{ term[0] | slugify }}">{{ term[0] }}</a>
+          <span class="article-meta-separator"> | </span>
+          <span>{{ term[1].size }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% for term in terms %}
+    <h2 id="{{ term[0] | slugify }}">{{ term[0] }}</h2>
+    <ul>
+      {% for post in term[1] %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>{{ post.date | date: '%Y-%m-%d' }}</small></li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
+  </article>
+</div>

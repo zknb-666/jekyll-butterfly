@@ -1,0 +1,42 @@
+<header class="{% if page.page_type == 'home' %}full_page{% elsif page.page_type == 'post' %}post-bg{% else %}not-home-page{% endif %}" id="page-header">
+  <nav id="nav">
+    <span id="blog-info">
+      <a class="nav-site-title" href="{{ '/' | relative_url }}"><span class="site-name">{{ site.title }}</span></a>
+      {% if page.page_type == 'post' %}
+      <a class="nav-page-title" href="{{ '/' | relative_url }}">
+        <span class="site-name">{{ page.title }}</span>
+        <span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span> {{ site.data.languages[site.lang].post.back_to_home }}</span></span>
+      </a>
+      {% endif %}
+    </span>
+    <div id="menus"></div>
+  </nav>
+
+  {% if page.page_type == 'home' %}
+  <div id="site-info">
+    <h1 id="site-title">{{ site.title }}</h1>
+  </div>
+  <div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div>
+  {% elsif page.page_type == 'post' %}
+  <div id="post-info">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <div id="post-meta">
+      <div class="meta-firstline">
+        <span class="post-meta-date">
+          <i class="far fa-calendar-alt fa-fw post-meta-icon"></i>
+          <span class="post-meta-label">{{ site.data.languages[site.lang].post.created }}</span>
+          <time class="post-meta-date-created" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time>
+          <span class="post-meta-separator">|</span>
+          <i class="fas fa-history fa-fw post-meta-icon"></i>
+          <span class="post-meta-label">{{ site.data.languages[site.lang].post.updated }}</span>
+          <time class="post-meta-date-updated" datetime="{{ page.last_modified_at | default: page.date | date_to_xmlschema }}">{{ page.last_modified_at | default: page.date | date: '%Y-%m-%d' }}</time>
+        </span>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div id="page-site-info">
+    <h1 id="site-title">{{ page.title | default: site.title }}</h1>
+  </div>
+  {% endif %}
+</header>

@@ -1,0 +1,26 @@
+---
+layout: default
+page_type: home
+body_class: page
+---
+
+{% assign post_list = paginator.posts | default: site.posts %}
+<div class="recent-posts nc" id="recent-posts">
+  <div class="recent-post-items">
+    {% for post in post_list %}
+    <div class="recent-post-item">
+      <div class="recent-post-info no-cover">
+        <a class="article-title" href="{{ post.url | relative_url }}" title="{{ post.title }}">{{ post.title }}</a>
+        <div class="article-meta-wrap">
+          <span class="post-meta-date">
+            <i class="far fa-calendar-alt"></i>
+            <span class="article-meta-label">Created</span>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y-%m-%d' }}</time>
+          </span>
+        </div>
+        <div class="content">{{ post.excerpt | strip_html | normalize_whitespace | truncate: 300 }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

@@ -9,7 +9,42 @@
       </a>
       {% endif %}
     </span>
-    <div id="menus"></div>
+    <div id="menus">
+      <div class="menus_items">
+        <div class="menus_item">
+          <a class="site-page" href="{{ '/' | relative_url }}">
+            <i class="fas fa-house"></i>
+            <span>{{ site.data.languages[site.lang].post.back_to_home }}</span>
+          </a>
+        </div>
+        <div class="menus_item">
+          <a class="site-page" href="{{ '/archives/' | relative_url }}">
+            <i class="fas fa-archive"></i>
+            <span>{{ site.data.languages[site.lang].page.archives }}</span>
+          </a>
+        </div>
+        <div class="menus_item">
+          <a class="site-page" href="{{ '/tags/' | relative_url }}">
+            <i class="fas fa-tags"></i>
+            <span>{{ site.data.languages[site.lang].page.tag }}</span>
+          </a>
+        </div>
+        <div class="menus_item">
+          <a class="site-page" href="{{ '/categories/' | relative_url }}">
+            <i class="fas fa-folder-open"></i>
+            <span>{{ site.data.languages[site.lang].page.category }}</span>
+          </a>
+        </div>
+      </div>
+      <div id="search-button">
+        <a class="site-page social-icon search" href="javascript:void(0);">
+          <i class="fas fa-search fa-fw"></i><span>{{ site.data.languages[site.lang].search.title }}</span>
+        </a>
+      </div>
+      <div id="toggle-menu">
+        <a class="site-page"><i class="fas fa-bars fa-fw"></i></a>
+      </div>
+    </div>
   </nav>
 
   {% if page.page_type == 'home' %}
@@ -40,3 +75,32 @@
   </div>
   {% endif %}
 </header>
+
+<div id="sidebar">
+  <div id="menu-mask"></div>
+  <div id="sidebar-menus">
+    <div class="avatar-img">
+      <img src="{{ site.data.butterfly.avatar | relative_url }}" onerror="this.onerror=null;this.src='{{ '/assets/img/friend_404.gif' | relative_url }}'" alt="avatar">
+    </div>
+    <div class="site-data">
+      <a href="{{ '/archives/' | relative_url }}"><h4>{{ site.posts.size }}</h4><span>{{ site.data.languages[site.lang].aside.articles }}</span></a>
+      <a href="{{ '/tags/' | relative_url }}"><h4>{{ site.tags.size }}</h4><span>{{ site.data.languages[site.lang].aside.tags }}</span></a>
+      <a href="{{ '/categories/' | relative_url }}"><h4>{{ site.categories.size }}</h4><span>{{ site.data.languages[site.lang].aside.categories }}</span></a>
+    </div>
+    <hr>
+    <div class="menus_items">
+      <a class="site-page" href="{{ '/' | relative_url }}">
+        <i class="fas fa-house fa-fw"></i><span>{{ site.data.languages[site.lang].post.back_to_home }}</span>
+      </a>
+      <a class="site-page" href="{{ '/archives/' | relative_url }}">
+        <i class="fas fa-archive fa-fw"></i><span>{{ site.data.languages[site.lang].page.archives }}</span>
+      </a>
+      <a class="site-page" href="{{ '/tags/' | relative_url }}">
+        <i class="fas fa-tags fa-fw"></i><span>{{ site.data.languages[site.lang].page.tag }}</span>
+      </a>
+      <a class="site-page" href="{{ '/categories/' | relative_url }}">
+        <i class="fas fa-folder-open fa-fw"></i><span>{{ site.data.languages[site.lang].page.category }}</span>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+---
+layout: null
+permalink: /search.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<search>
+  {% for post in site.posts %}
+  <entry>
+    <title>{{ post.title | default: site.data.languages[site.lang].no_title | xml_escape }}</title>
+    <content>{{ post.content | strip_html | normalize_whitespace | xml_escape }}</content>
+    <url>{{ post.url | relative_url | xml_escape }}</url>
+  </entry>
+  {% endfor %}
+</search>

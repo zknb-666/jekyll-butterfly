@@ -1,0 +1,26 @@
+<div id="search-mask"></div>
+<div id="local-search">
+  <div class="search-dialog">
+    <div class="search-nav">
+      <span>{{ site.data.languages[site.lang].search.title }}</span>
+      <button type="button" class="search-close-button"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="search-wrap">
+      <div class="local-search-box">
+        <div class="local-search-input">
+          <i class="fas fa-search"></i>
+          <input placeholder="{{ site.data.languages[site.lang].search.input_placeholder }}" type="text">
+        </div>
+        <div id="loading-status" hidden><i class="fas fa-spinner fa-pulse"></i></div>
+        <div id="local-search-stats">
+          <span id="loading-database">{{ site.data.languages[site.lang].search.load_data }}</span>
+          <span style="visibility: hidden;"></span>
+        </div>
+        <div id="local-search-results"></div>
+        <div id="local-search-pagination">
+          <ul class="ais-Pagination-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

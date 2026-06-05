@@ -90,7 +90,20 @@
     const GLOBAL_CONFIG = {
       root: '{{ "/" | relative_url }}',
       algolia: undefined,
-      localSearch: undefined,
+      localSearch: {
+        path: '{{ "/search.xml" | relative_url }}',
+        preload: false,
+        top_n_per_article: {{ site.data.butterfly.local_search.top_n_per_article | default: 1 }},
+        unescape: false,
+        languages: {
+          hits_empty: '{{ site.data.languages[site.lang].search.local_search.hits_empty | escape }}',
+          hits_stats: '{{ site.data.languages[site.lang].search.local_search.hits_stats | escape }}'
+        },
+        pagination: {
+          enable: true,
+          hitsPerPage: {{ site.data.butterfly.local_search.hits_per_page | default: 10 }}
+        }
+      },
       translate: undefined,
       highlight: {
         plugin: 'highlight.js',

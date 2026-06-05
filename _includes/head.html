@@ -93,7 +93,7 @@
       localSearch: {
         path: '{{ "/search.xml" | relative_url }}',
         preload: false,
-        top_n_per_article: 1,
+        top_n_per_article: {{ site.data.butterfly.local_search.top_n_per_article | default: 1 }},
         unescape: false,
         languages: {
           hits_empty: '{{ site.data.languages[site.lang].search.local_search.hits_empty | escape }}',
@@ -101,7 +101,7 @@
         },
         pagination: {
           enable: true,
-          hitsPerPage: 10
+          hitsPerPage: {{ site.data.butterfly.local_search.hits_per_page | default: 10 }}
         }
       },
       translate: undefined,

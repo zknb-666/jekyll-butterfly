@@ -7,7 +7,7 @@ permalink: /search.xml
   {% for post in site.posts %}
   <entry>
     <title>{{ post.title | default: site.data.languages[site.lang].no_title | xml_escape }}</title>
-    <content>{{ post.content | strip_html | normalize_whitespace | xml_escape }}</content>
+    <content>{{ post.content | strip_html | normalize_whitespace | truncate: 600 | xml_escape }}</content>
     <url>{{ post.url | relative_url | xml_escape }}</url>
   </entry>
   {% endfor %}

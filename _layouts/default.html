@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: 'en' }}" data-theme="light">
 {% include head.html %}
+{% assign resolved_page_type = page.page_type | default: page.layout | default: 'page' %}
 <body>
-  <div class="{{ page.body_class | default: 'page' }}" id="body-wrap">
-    {% include site_header.html %}
+  <div class="{{ page.body_class | default: resolved_page_type }}" id="body-wrap">
+    {% include site_header.html page_type=resolved_page_type %}
     <main class="layout" id="content-inner">
       {{ content }}
       {% unless page.hide_aside %}

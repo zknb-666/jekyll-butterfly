@@ -136,11 +136,12 @@
   </script>
 
   <script id="config-diff">
+    {% assign resolved_page_type = page.page_type | default: page.layout | default: 'page' %}
     var GLOBAL_CONFIG_SITE = {
       title: '{{ page.title | default: site.title | escape }}',
       isHighlightShrink: false,
-      isToc: {% if page.page_type == 'post' %}true{% else %}false{% endif %},
-      pageType: '{{ page.page_type | default: "page" }}'
+      isToc: {% if resolved_page_type == 'post' %}true{% else %}false{% endif %},
+      pageType: '{{ resolved_page_type }}'
     }
   </script>
 </head>

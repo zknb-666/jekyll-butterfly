@@ -1,23 +1,37 @@
-<header class="{% if page.page_type == 'home' %}full_page{% elsif page.page_type == 'post' %}post-bg{% else %}not-home-page{% endif %}" id="page-header">
+<header class="{% if include.page_type == 'home' %}full_page{% elsif include.page_type == 'post' %}post-bg{% else %}not-home-page{% endif %}" id="page-header">
   <nav id="nav">
     <span id="blog-info">
       <a class="nav-site-title" href="{{ '/' | relative_url }}"><span class="site-name">{{ site.title }}</span></a>
-      {% if page.page_type == 'post' %}
+      {% if include.page_type == 'post' %}
       <a class="nav-page-title" href="{{ '/' | relative_url }}">
         <span class="site-name">{{ page.title }}</span>
         <span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span> {{ site.data.languages[site.lang].post.back_to_home }}</span></span>
       </a>
       {% endif %}
     </span>
-    <div id="menus"></div>
+    <div id="menus">
+      {% for menu in site.data.butterfly.menu %}
+      {% assign current_path = page.url | default: '/' %}
+      {% if current_path == menu.path %}
+      {% assign active_class = 'active' %}
+      {% else %}
+      {% assign active_class = '' %}
+      {% endif %}
+      <a class="site-page {{ active_class }}" href="{{ menu.path | relative_url }}">
+        <i class="{{ menu.icon }}"></i>
+        <span>{{ menu.name }}</span>
+      </a>
+      {% endfor %}
+    </div>
+    <div id="toggle-menu"><a class="site-page"><i class="fa-solid fa-bars fa-fw"></i></a></div>
   </nav>
 
-  {% if page.page_type == 'home' %}
+  {% if include.page_type == 'home' %}
   <div id="site-info">
     <h1 id="site-title">{{ site.title }}</h1>
   </div>
   <div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div>
-  {% elsif page.page_type == 'post' %}
+  {% elsif include.page_type == 'post' %}
   <div id="post-info">
     <h1 class="post-title">{{ page.title }}</h1>
     <div id="post-meta">
@@ -40,3 +54,28 @@
   </div>
   {% endif %}
 </header>
+
+<div id="sidebar">
+  <div id="menu-mask"></div>
+  <div id="sidebar-menus">
+    <div class="avatar-img is-center">
+      <img src="{{ site.data.butterfly.avatar | relative_url }}" alt="{{ site.author.name | default: site.title }}">
+    </div>
+    <div class="site-data is-center">
+      <a href="{{ '/archives/' | relative_url }}"><div class="headline">{{ site.data.languages[site.lang].aside.articles }}</div><div class="length-num">{{ site.posts.size }}</div></a>
+      <a href="{{ '/tags/' | relative_url }}"><div class="headline">{{ site.data.languages[site.lang].aside.tags }}</div><div class="length-num">{{ site.tags.size }}</div></a>
+      <a href="{{ '/categories/' | relative_url }}"><div class="headline">{{ site.data.languages[site.lang].aside.categories }}</div><div class="length-num">{{ site.categories.size }}</div></a>
+    </div>
+    <hr>
+    <div class="menus_items">
+      {% for menu in site.data.butterfly.menu %}
+      <div class="menus_item">
+        <a class="site-page child" href="{{ menu.path | relative_url }}">
+          <i class="{{ menu.icon }}"></i>
+          <span>{{ menu.name }}</span>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

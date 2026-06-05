@@ -3,3 +3,19 @@ theme_version: 5.5.4
 avatar: /assets/img/butterfly-icon.png
 favicon: /assets/img/favicon.ico
 announcement: This is my Blog
+menu:
+  - name: Home
+    path: /
+    icon: fa-fw fas fa-home
+  - name: Archives
+    path: /archives/
+    icon: fa-fw fas fa-archive
+  - name: Categories
+    path: /categories/
+    icon: fa-fw fas fa-folder-open
+  - name: Tags
+    path: /tags/
+    icon: fa-fw fas fa-tags
+  - name: About
+    path: /about/
+    icon: fa-fw fas fa-heart

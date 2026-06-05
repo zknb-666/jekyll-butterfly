@@ -10,9 +10,11 @@
       {% endif %}
     </span>
     <div id="menus">
+      {% assign current_path = page.url | default: '/' | split: '?' | first %}
+      {% assign current_path_normalized = current_path | append: '#' | replace: '/#', '#' %}
       {% for menu in site.data.butterfly.menu %}
-      {% assign current_path = page.url | default: '/' %}
-      {% if current_path == menu.path %}
+      {% assign menu_path_normalized = menu.path | append: '#' | replace: '/#', '#' %}
+      {% if current_path_normalized == menu_path_normalized %}
       {% assign active_class = 'active' %}
       {% else %}
       {% assign active_class = '' %}
@@ -59,7 +61,8 @@
   <div id="menu-mask"></div>
   <div id="sidebar-menus">
     <div class="avatar-img is-center">
-      <img src="{{ site.data.butterfly.avatar | relative_url }}" alt="{{ site.author.name | default: site.title }}">
+      {% assign avatar_alt = site.author.name | default: site.title | default: 'Site' %}
+      <img src="{{ site.data.butterfly.avatar | relative_url }}" alt="{{ avatar_alt }} avatar">
     </div>
     <div class="site-data is-center">
       <a href="{{ '/archives/' | relative_url }}"><div class="headline">{{ site.data.languages[site.lang].aside.articles }}</div><div class="length-num">{{ site.posts.size }}</div></a>
